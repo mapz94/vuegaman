@@ -1,5 +1,5 @@
 <template>
-  <v-app style="background-color: rgb(32,32,64)">
+  <v-app style="background-color: rgb(32,32,48)">
     <div style="color: white; font-size: 3vw; text-align: center;">GAMAN</div>
     <img class="logo-filter" src="@/assets/logo_gaman_horse.svg"/>
   </v-app>
