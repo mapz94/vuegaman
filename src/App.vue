@@ -30,7 +30,10 @@ export default {
 .logo-filter{
   animation: hue-rotation 4s ease 0s infinite;
 }
-  @keyframes hue-rotation {
+
+
+
+@keyframes hue-rotation {
     0%,
     5%{
       filter: hue-rotate(18deg)
