@@ -5,6 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    window: {
+      width: 0,
+      height: 0
+    },
   },
   mutations: {
   },
