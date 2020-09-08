@@ -5,9 +5,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    window: {
-      width: 0,
-      height: 0
+    brandName: "Gaman",
+    drawers: ['Default (no property)', 'Permanent', 'Temporary'],
+    primaryDrawer: {
+      model: false,
+      type: 'default (no property)',
+      clipped: false,
+      floating: false,
+      mini: false,
+    },
+    footer: {
+      inset: false,
     },
   },
   mutations: {

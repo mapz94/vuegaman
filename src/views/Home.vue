@@ -1,32 +1,28 @@
 <template>
-  <div style="width:100%; height:100%">
-   <div class="text-center">
-    <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="#7B2F4B" width="80" height="80" dark v-bind="attrs" v-on="on"> MENU </v-btn>
-      </template>
-      <v-list color="#7B2F4B" dark>
-        <v-list-item style="width: 100%" three-line v-for="(item, index) in items" :key="index">
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-  </div>
-      
-      <div class="containers">
-          <div class="content-container">
-            <div class="overlay-left">
-              <div class="item-content-title">Contenido A</div>
-            </div>
-          </div>
-          <Logo style="margin-left: 1%; margin-right: 1%; margin-bottom: 10%;"/>
-            <div style="margin-top: -6%;" class="content-container">
-              <div class="overlay-right">
-                <div class="item-content-title">Contenido B</div>
+  <v-row dense justify="center">
+    <v-col cols=9>
+      <v-card flat color="transparent">
+          <v-row dense justify="center">
+            <v-col cols="8">
+              <div :style=darkBorder>
+                <v-card-title>Gaman Digital</v-card-title>
+                <v-card-title style="text-align: justify !important">Esta es una prueba de contenido para Gaman Digital</v-card-title>
+                <v-card-title style="text-align: justify !important">Esta es una prueba de contenido para Gaman Digital 2</v-card-title>
+                <v-card-title style="text-align: justify !important">Esta es una prueba de contenido para Gaman Digital 3</v-card-title>
               </div>
-            </div>
-      </div>
-  </div>
+            </v-col>
+            <v-spacer></v-spacer>
+            <v-col>
+              <v-img :style=noColor max-width="280" src="@/assets/logo_gaman_horse.svg"></v-img>
+            </v-col>
+        </v-row>
+      </v-card>
+      <v-card >
+      
+        <v-img :style=invert src="@/assets/synth_hills.svg"></v-img>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -34,90 +30,32 @@ export default {
   name: 'App',
   data () {
     return{
-      items: [
-        { title: 'Nosotros' },
-        { title: 'Servicios' },
-        { title: 'Contacto' },
-      ],
+
     }
   },
   components:{
-    Logo : () => import("@/components/TheLogo")
+    //Logo : () => import("@/components/TheLogo")
   },
-  methods:{
-    handleResize() {
-      this.$store.state.window.width = window.innerWidth;
-      this.$store.state.window.height = window.innerHeight;
+  computed:{
+    noColor(){
+      return this.$vuetify.theme.dark ? "filter: saturate(0) brightness(100)" : "filter: saturate(0) brightness(0)"
     },
-  },
-  created(){
-    window.addEventListener('resize', this.handleResize);
-    this.handleResize();
-  },
-  destroyed() {
-    window.removeEventListener('resize', this.handleResize);
-  },
+    darkBorder(){
+      return this.$vuetify.theme.dark ? "border-style:solid; border-color:white" : "border-style:solid; border-color:black"
+    },
+      invert(){
+        return this.$vuetify.theme.dark ? "filter: invert(100); box-shadow: inset 0 0 50px #fff, inner white */ inset 20px 0 80px #f0f, inner left magenta short inset -20px 0 80px #0ff,   inner right cyan short inset 20px 0 300px #f0f,  inner left magenta broad  inset -20px 0 300px #0ff,  inner right cyan broad  0 0 50px #fff,   outer white  -10px 0 80px #f0f,  outer left magenta  10px 0 80px #0ff;  outer right cyan " : "filter: invert(0); box-shadow: inset 0 0 50px #fff, inner white */ inset 20px 0 80px #f0f, inner left magenta short inset -20px 0 80px #0ff,   inner right cyan short inset 20px 0 300px #f0f,  inner left magenta broad  inset -20px 0 300px #0ff,  inner right cyan broad  0 0 50px #fff,   outer white  -10px 0 80px #f0f,  outer left magenta  10px 0 80px #0ff;  outer right cyan "
+      }
+  }
+  
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@600&display=swap');
-
-.containers{
-  display: flex;
-}
-
-
-.overlay-left{
-  width:100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: .5s ease;
-  opacity: 1;
-  border-style: solid;
-  border-color: cyan;
-  background-color: #202030;
-}
-.overlay-right{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: .5s ease;
-  opacity: 1;
-  border-style: solid;
-  border-color: cyan;
-  background-color: #202030;
-}
-
-.overlay-left:hover{
-  opacity: 0.5;
-}
-
-.overlay-right:hover{
-  opacity: 0.5;
-}
-
-.content-container{
-  overflow:visible;
-  display: flex;
-  height: 100%;
-  width: 60%;
-  float: left;
-  position:relative;
-  background-color: white;
-}
-
-.item-content-title{
-  z-index: 1;
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  background-color: transparent;
-  text-shadow: 3px 5px 2px black;
-  color: white;
-  font-size: 3vw;
+.synth-horse{
+  display: relative;
+  left: 40%;
+  filter: saturate(0) brightness(100);
 
 }
 

@@ -1,11 +1,8 @@
 <template>
-<div>
+  <div class="container-logo">
     <div class="brand-name">GAMAN</div>
-    <div class="container-logo">
-      <img class="logo-filter" src="@/assets/logo_gaman_horse.svg"/>
-    </div>
-</div>
-
+    <img class="logo-filter" src="@/assets/logo_gaman_horse.svg"/>
+  </div>
 </template>
 
 <script>
@@ -29,9 +26,8 @@ export default {
     z-index: 1;
     display: flex;
     color: white;
-    position: relative;
-    top: 30%;
-    left: 37%;
+    position: fixed;
+    top: 18%
 }
 
 .logo-filter{
