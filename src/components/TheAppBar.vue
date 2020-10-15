@@ -1,9 +1,12 @@
 <template>
+<div id="background">
     <v-app-bar flat color="transparent" app hide-on-scroll>
         <v-toolbar-title>{{brandName}}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-app-bar-nav-icon v-if="primaryDrawer.type !== 'permanent'" @click.stop="primaryDrawer.model = !primaryDrawer.model" ></v-app-bar-nav-icon>
     </v-app-bar>
+</div>
+    
 </template>
 
 <script>
@@ -25,5 +28,6 @@ export default {
 </script>
 
 <style>
+
 
 </style>
