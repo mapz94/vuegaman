@@ -17,10 +17,6 @@
             </v-col>
         </v-row>
       </v-card>
-      <v-card >
-      
-        <v-img :style=invert src="@/assets/synth_hills.svg"></v-img>
-      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -58,6 +54,7 @@ export default {
   filter: saturate(0) brightness(100);
 
 }
+
 
 
 </style>
