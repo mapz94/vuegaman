@@ -1,15 +1,14 @@
 <template>
 <div id="background">
-    <v-app-bar flat color="primary" app hide-on-scroll>
-        <v-row>
-            <v-col cols="5" >
-                <v-img v-if="typeof appbar.logo.data.full_url != 'undefined'" :src="appbar.logo.data.full_url" :alt="appbar.branding" ></v-img>
-            </v-col>
-        </v-row>
-        
+    <v-app-bar dark flat color="primary" dense app hide-on-scroll> 
+        <v-toolbar-title>
+            Visita nuestras redes sociales
+        </v-toolbar-title>
         <v-spacer></v-spacer>
         <!--v-app-bar-nav-icon v-if="primaryDrawer.type !== 'permanent'" @click.stop="primaryDrawer.model = !primaryDrawer.model" ></!--v-app-bar-nav-icon-->
-        
+        <v-btn text v-for="(social, i) in socialMedia" :key="i">
+            <v-icon x-large>{{social.icon}}</v-icon>
+        </v-btn>
 
     </v-app-bar>
 </div>
@@ -20,25 +19,15 @@
 export default {
   props: {
   },
-    data(){
-        return{
-
-        }
-    },
-    created(){
-        this.$store.dispatch("getAppbar");
-    },
-    computed:{
-        appbar(){
-            return this.$store.state.appbar;
-        },
-        primaryDrawer(){
-            return this.$store.state.primaryDrawer;
-        },
-        branding(){
-            return this.$store.state.branding;
-        }
-    }
+  data(){
+      return{
+          socialMedia:[
+          {icon: 'mdi-facebook', link: ''},
+          {icon: 'mdi-instagram', link: ''},
+          {icon: 'mdi-twitter', link: ''},
+      ]
+      }
+  },
 }
 </script>
 

@@ -18,7 +18,8 @@ export default new Vuex.Store({
     footer: {
       inset: false,
     },
-    services:[]
+    services:[],
+    promotions: []
   },
   mutations: {      
     updatePages(state, pages){
@@ -26,7 +27,10 @@ export default new Vuex.Store({
     },
     updateServices(state, services){
       state.services = services;
-    }
+    },
+    updatePromotions(state, promotions){
+      state.promotions = promotions;
+    },
   },
   actions: {
     async getPages({commit}){
@@ -39,6 +43,13 @@ export default new Vuex.Store({
       client.getItems("services").then(response => {
         console.log(response.data);
         commit("updateServices", response.data);
+      }).catch(error => console.log(error));
+    },
+    getPromotions({commit}){
+      let params = {fields: ['*.*.*.*.*']};
+      client.getItems("promotions", params).then(response => {
+        console.log(response.data);
+        commit("updatePromotions", response.data);
       }).catch(error => console.log(error));
     },
     getThemeColors({commit}, vuetify){ //Vuetify theme!!!
