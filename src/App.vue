@@ -1,12 +1,15 @@
 <template>
   <v-app>
-    <loading-screen :is-loading="isLoading"></loading-screen>
     <v-dialog v-model="dialog" max-width="300">
       <v-card>
         <v-col>
           <v-row>
-            <v-card-title class="text-center">Esta página web aun esta en construcción.</v-card-title>
-            <v-card-text class="text-center">Agradecemos su comprensión.</v-card-text>
+            <v-card-title class="text-center"
+              >Esta página web aun esta en construcción.</v-card-title
+            >
+            <v-card-text class="text-center"
+              >Agradecemos su comprensión.</v-card-text
+            >
           </v-row>
         </v-col>
         <v-col>
@@ -16,56 +19,43 @@
         </v-col>
       </v-card>
     </v-dialog>
-    <theAppbar/>
-    <v-main >
-      <v-container fluid style="padding: 0% !important;">
-        <transition name="fade" mode="out-in"> <!-- Curve -->
-          <router-view/>          
-        </transition>
-      </v-container>
+    <appbar />
+    <v-main>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </v-main>
-  <theFooter/>
   </v-app>
 </template>
+
 <script>
-  export default {
-    data(){
-      return{
-        dialog :true,
-        isLoading: true
-      }
-    },
-    created(){
-      this.$store.dispatch("getThemeColors", this.$vuetify);
-    },
-    components:{
-      theAppbar: () => import("@/components/TheAppBar"),
-      theFooter: () => import("@/components/TheFooter")
-    },
-    mounted(){
-      setTimeout(() => {
-        this.isLoading = false
-      }, 5000)
-    },
-    methods:{
-      
-    },
-    computed:{
-      themeColors(){
-        return this.$store.state.themeColors;
-      },
-    }
+export default {
+  components: {
+    appbar: () => import("@/components/TheAppBar")
+  },
+  data() {
+    return {
+      dialog: true,
+      clipped: false,
+      drawer: false,
+      fixed: false,
+      items: [
+        {
+          icon: "mdi-apps",
+          title: "Welcome",
+          to: "/"
+        },
+        {
+          icon: "mdi-chart-bubble",
+          title: "Inspire",
+          to: "/inspire"
+        }
+      ],
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: "Vuetify.js"
+    };
   }
+};
 </script>
-
-<style>
-.fade-enter-active,
-.face-leave-active{
-  transition: opacity 0.3s;
-}
-.fade-enter,
-.fade-leave-to{
-  opacity: 0;
-}
-
-</style>

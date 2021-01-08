@@ -1,81 +1,116 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import client from '@/plugins/directus'
+import Vue from "vue";
+import Vuex from "vuex";
+import client from "@/plugins/directus";
+const params = { fields: ["*.*.*.*.*"] };
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     branding: "",
-    drawers: ['Default (no property)', 'Permanent', 'Temporary'],
+    drawers: ["Default (no property)", "Permanent", "Temporary"],
     primaryDrawer: {
       model: false,
-      type: 'default (no property)',
+      type: "default (no property)",
       clipped: false,
       floating: false,
-      mini: false,
+      mini: false
     },
     footer: {
-      inset: false,
+      inset: false
     },
-    services:[],
-    promotions: []
+    callouts: [],
+    features: [],
+    promotions: [],
+    team: [],
+    templates: []
   },
-  mutations: {      
-    updatePages(state, pages){
-      state.pages = pages;
-    },
-    updateServices(state, services){
-      state.services = services;
-    },
-    updatePromotions(state, promotions){
+  mutations: {
+    updatePromotions(state, promotions) {
       state.promotions = promotions;
     },
+    updateCallouts(state, callouts) {
+      state.callouts = callouts;
+    },
+    updateFeatures(state, features) {
+      state.features = features;
+    },
+    updateTeam(state, team) {
+      state.team = team;
+    },
+    updateTemplate(state, templates) {
+      state.templates = templates;
+    }
   },
   actions: {
-    async getPages({commit}){
-      let params = {fields: ['*.*.*.*.*']};
-      let pages = await client.getItems("pages", params);
-      console.log(pages.data);
-      commit("updatePages", pages.data);
-    },
-    getServices({commit}){
-      client.getItems("services").then(response => {
-        console.log(response.data);
-        commit("updateServices", response.data);
-      }).catch(error => console.log(error));
-    },
-    getPromotions({commit}){
-      let params = {fields: ['*.*.*.*.*']};
-      client.getItems("promotions", params).then(response => {
-        console.log(response.data);
+    async getPromotions({ commit }) {
+      try {
+        let response = await client.getItems("promotions", params);
         commit("updatePromotions", response.data);
-      }).catch(error => console.log(error));
+      } catch (error) {
+        console.log(error);
+      }
     },
-    getThemeColors({commit}, vuetify){ //Vuetify theme!!!
-      commit;
-      client.getItem("theme_colors", "1").then(response =>{
-        let theme = response.data;
-        vuetify.theme.isDark = theme.dark;
-        vuetify.theme.themes.dark.primary = theme.primary;
-        vuetify.theme.themes.light.primary = theme.primary;
-        vuetify.theme.themes.dark.secondary = theme.secondary;
-        vuetify.theme.themes.light.secondary = theme.secondary;
-        vuetify.theme.themes.dark.accent = theme.accent;
-        vuetify.theme.themes.light.accent = theme.accent;
-        vuetify.theme.themes.dark.error = theme.error;
-        vuetify.theme.themes.light.error = theme.error;
-        vuetify.theme.themes.dark.info = theme.info;
-        vuetify.theme.themes.light.info = theme.info;
-        vuetify.theme.themes.dark.success = theme.success;
-        vuetify.theme.themes.light.success = theme.success;
-        vuetify.theme.themes.dark.warning = theme.warning;
-        vuetify.theme.themes.light.warning = theme.warning;
-      });
+    async getCallouts({ commit }) {
+      try {
+        let response = await client.getItems("callouts", params);
+        commit("updateCallouts", response.data);
+      } catch (error) {
+        console.log(error);
+      }
     },
-    
+    async getFeatures({ commit }) {
+      try {
+        let response = await client.getItems("features", params);
+        commit("updateFeatures", response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getTeam({ commit }) {
+      try {
+        let response = await client.getItems("team", params);
+        commit("updateTeam", response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getAtomic({ commit }) {
+      try {
+        let response = await client.getItems("template", {
+          fields: [
+            "*",
+            "elements.organisms_id.elements.molecules_id.elements.atoms_id.*",
+            "elements.organisms_id.*",
+            "elements.organisms_id.elements.molecules_id.*"
+          ]
+        });
+        let templates = response.data;
+        let new_templates = [];
+        for (let template of templates) {
+          let organisms = [];
+          for (let organism of template.elements) {
+            let molecules = [];
+            for (let molecule of organism.organisms_id.elements) {
+              let atoms = [];
+              for (let atom of molecule.molecules_id.elements) {
+                atoms.push(atom.atoms_id);
+              }
+              molecule.molecules_id.elements = atoms;
+              molecules.push(molecule.molecules_id);
+            }
+            organism.organisms_id.elements = molecules;
+            organisms.push(organism.organisms_id);
+          }
+          template.elements = organisms;
+          new_templates.push(template);
+        }
+        commit("updateTemplate", new_templates);
+      } catch (e) {
+        console.log(e);
+      }
+    }
   },
-  modules: {
-
-  }
-})
+  modules: {}
+});
